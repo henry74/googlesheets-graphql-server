@@ -3,7 +3,7 @@ import { makeExecutableSchema } from "graphql-tools";
 import { merge } from "lodash";
 
 /* tslint:disable:no-var-requires */
-const modules = [require("./mutations"), require("./books")];
+const modules = [require("./sheets")];
 
 const mainDefs = [
   `

@@ -5,7 +5,7 @@ export type Maybe<T> = T | null;
 // ====================================================
 
 export interface Query {
-  dummy?: Maybe<string>;
+  unused?: Maybe<string>;
 
   books?: Maybe<(Maybe<Book>)[]>;
 }
@@ -17,24 +17,19 @@ export interface Book {
 }
 
 export interface Mutation {
-  dummy?: Maybe<string>;
-
-  setFakeStatus?: Maybe<string>;
+  unused?: Maybe<string>;
 
   addBooks?: Maybe<string>;
 }
 
 export interface Subscription {
-  dummy?: Maybe<string>;
+  unused?: Maybe<string>;
 }
 
 // ====================================================
 // Arguments
 // ====================================================
 
-export interface SetFakeStatusMutationArgs {
-  status: string;
-}
 export interface AddBooksMutationArgs {
   title: string;
 }
