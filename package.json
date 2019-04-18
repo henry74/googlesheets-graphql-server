@@ -1,0 +1,36 @@
+{
+  "name": "simple-typescript-graphql-server",
+  "version": "1.0.0",
+  "description": "template",
+  "main": "dist/index.js",
+  "types": "src/generatedTypes.ts",
+  "repository": "git@github.com:henry74/simple-typescript-graphql-server.git",
+  "author": "henry74 <henry74@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "build:watch": "rm -rf dist && tsc -w",
+    "start": "yarn build && node dist/index.js",
+    "start:dev": "npm-run-all --parallel build:watch inspect",
+    "inspect": "nodemon --inspect=0.0.0.0:9229 dist/index.js",
+    "generate": "./tools/generate-gql.sh"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.3.2",
+    "compression": "^1.7.4",
+    "express": "^4.16.4",
+    "gapi-to-graphql": "^2.0.5",
+    "graphql": "^14.1.1",
+    "graphql-middleware": "^3.0.2",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.0",
+    "graphql-code-generator": "^0.18.1",
+    "graphql-codegen-typescript-server": "^0.18.1",
+    "nodemon": "^1.18.11",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.3"
+  }
+}
