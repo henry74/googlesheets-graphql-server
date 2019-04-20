@@ -43,7 +43,7 @@ const schema: GraphQLSchema = makeExecutableSchema({
   logger: console,
   allowUndefinedInResolve: false,
   resolverValidationOptions: {
-    requireResolversForNonScalar: true,
+    requireResolversForNonScalar: false,
     requireResolversForArgs: true
   },
   resolvers,

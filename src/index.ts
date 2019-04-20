@@ -14,7 +14,7 @@ const server = new ApolloServer({
   introspection: true,
   formatError: error => {
     logger.error(error);
-    return new Error("Internal server error");
+    return { message: error.message };
   }
 });
 
