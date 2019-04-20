@@ -4,7 +4,7 @@
 PORT='9898'
 
 PORT=$PORT ts-node src/index.ts & SERVER_PID=$!
-sleep 4s
+sleep 10s
 gql-gen --config ./tools/codegen.yml 
 
 kill -9 $SERVER_PID
