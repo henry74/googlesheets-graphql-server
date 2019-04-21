@@ -23,11 +23,11 @@ export type Json = any;
 
 export interface Query {
   unused?: Maybe<string>;
-
+  /** Fetch last modified date for a spreadsheet */
   lastModifiedDate: string;
-
+  /** Fetch spreadsheet properties */
   spreadsheet: Spreadsheet;
-
+  /** Fetch worksheet values as a table for a given range (A1 notation) */
   fetchTable: Table;
 }
 
@@ -91,11 +91,11 @@ export interface SpreadsheetQueryArgs {
 }
 export interface FetchTableQueryArgs {
   spreadsheetId: string;
-
+  /** Name of worksheet (tab name) */
   worksheetTitle: string;
-
+  /** Table headers included in range */
   rangeHeaders: boolean;
-
+  /** Table range in A1 notation */
   worksheetRange?: Maybe<string>;
 }
 export interface AddBooksMutationArgs {

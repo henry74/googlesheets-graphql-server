@@ -92,7 +92,7 @@ function sheetToTable(sheet, hasHeaders: boolean): Table {
   const headers = hasHeaders
     ? gridData.rowData[0].values // first row (headers)
         .map(col => formattedValue(col))
-    : gridData.rowData[0].values.map((v, i) => `Column${i + 1}`);
+    : gridData.rowData[0].values.map((_, i) => `Column${i + 1}`);
 
   const otherRows = hasHeaders ? gridData.rowData.slice(1) : gridData.rowData;
 
