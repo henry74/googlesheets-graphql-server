@@ -1,10 +1,10 @@
 {
-  "name": "simple-typescript-graphql-server",
+  "name": "googlesheets-graphql-server",
   "version": "1.0.0",
   "description": "template",
   "main": "dist/index.js",
   "types": "src/generatedTypes.ts",
-  "repository": "git@github.com:henry74/simple-typescript-graphql-server.git",
+  "repository": "git@github.com:henry74/googlesheets-graphql-server.git",
   "author": "henry74 <henry74@gmail.com>",
   "license": "MIT",
   "scripts": {
