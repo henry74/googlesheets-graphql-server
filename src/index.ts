@@ -4,6 +4,7 @@ import { ApolloServer } from "apollo-server-express";
 import { schema } from "./schema";
 import { context } from "./data";
 import logger from "./util/logger";
+import { GraphQLError } from "graphql";
 
 const app = express();
 app.use(compression());
@@ -14,7 +15,7 @@ const server = new ApolloServer({
   introspection: true,
   formatError: error => {
     logger.error(error);
-    return { message: error.message };
+    return new GraphQLError(error.message, null, null, null, null, error);
   }
 });
 
