@@ -2,14 +2,18 @@
 
 ## Setup
 
-1. Enable Google Sheets API & download credentials: [Node.js QuickStart](https://developers.google.com/sheets/api/quickstart/nodejs)
-2. Share Googlesheet with email address from credentials
-3. Assign environment variables `CLIENT_EMAIL` and `PRIVATE_KEY` to credential values (e.g. create `.env` file)
+1. Create a new Google project and enable Google Calendar API
+2. Create `OAuth 2.0 client ID` credentials
+3. Copy `Client ID` and `Client Secret` into .env
 
 ```bash
-# Sample .env file
-CLIENT_EMAIL="sheets-reader-account@yourgoogleprojectname.iam.gserviceaccount.com"
-PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nabunchofnonsensecharacters\n-----END PRIVATE KEY-----\n"
+# See .env.example for required environment variables
+```
+
+Generate token manually (can also be done through API)
+
+```
+yarn authorize
 ```
 
 ### API Usage
