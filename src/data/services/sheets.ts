@@ -3,22 +3,59 @@ import envVars from "../../config/envVars";
 import { Worksheet, Table } from "../../generatedTypes";
 import * as zipObject from "lodash.zipobject";
 import { ApolloError } from "apollo-server-core";
+import { OAuth2Client } from "googleapis-common";
+import * as fs from "fs-extra";
 import logger from "../../util/logger";
 
-const CLIENT_EMAIL = envVars().CLIENT_EMAIL;
-const PRIVATE_KEY = envVars().PRIVATE_KEY;
-const scopes = [
+const GOOGLE_OAUTH2_CLIENT_ID = envVars().GOOGLE_OAUTH2_CLIENT_ID;
+const GOOGLE_OAUTH2_CLIENT_SECRET = envVars().GOOGLE_OAUTH2_CLIENT_SECRET;
+const GOOGLE_OAUTH2_REDIRECT_URL = envVars().GOOGLE_OAUTH2_REDIRECT_URL;
+const SCOPES = [
   "https://www.googleapis.com/auth/spreadsheets.readonly",
   "https://www.googleapis.com/auth/drive.readonly"
 ];
-const auth = new google.auth.JWT(CLIENT_EMAIL, null, PRIVATE_KEY, scopes, null);
-google.options({
-  timeout: 5000,
-  auth
-});
+const TOKEN_PATH = envVars().TOKEN_PATH;
+
+const authClient = new google.auth.OAuth2(
+  GOOGLE_OAUTH2_CLIENT_ID,
+  GOOGLE_OAUTH2_CLIENT_SECRET,
+  GOOGLE_OAUTH2_REDIRECT_URL
+);
+
+async function fetchAuthClient(): Promise<OAuth2Client> {
+  const tokens = await fetchAccessTokens();
+  authClient.setCredentials(tokens);
+  return authClient;
+}
+
+async function fetchAccessTokens() {
+  if (await fs.pathExists(TOKEN_PATH)) {
+    const tokens = await fs.readJson(TOKEN_PATH);
+    // logger.debug(`Found cached tokens ${TOKEN_PATH}`);
+    if (tokens) return tokens;
+  }
+  logger.error("No tokens found - please authorize");
+  return "";
+}
+
+export const setOAuthCode = async (code: string) => {
+  const { tokens } = await authClient.getToken(code);
+  fs.writeJson(TOKEN_PATH, tokens);
+  logger.debug("Token stored to", TOKEN_PATH);
+  return tokens;
+};
+
+export const authUrl = async (): Promise<String> => {
+  const authUrl = await authClient.generateAuthUrl({
+    access_type: "offline",
+    scope: SCOPES
+  });
+  return authUrl;
+};
 
 export const lastModifiedDate = async (spreadsheetId: string) => {
-  const drive = google.drive("v3");
+  const auth = await fetchAuthClient();
+  const drive = google.drive({ version: "v3", auth });
   const { data } = await drive.files.get({
     fileId: spreadsheetId,
     fields: "modifiedTime"
@@ -29,7 +66,8 @@ export const lastModifiedDate = async (spreadsheetId: string) => {
 export const worksheets = async (
   spreadsheetId: string
 ): Promise<Array<Worksheet>> => {
-  const sheets = google.sheets("v4");
+  const auth = await fetchAuthClient();
+  const sheets = google.sheets({ version: "v4", auth });
   try {
     const { data } = await sheets.spreadsheets.get({
       spreadsheetId,
@@ -67,8 +105,8 @@ export const table = async (
   const ranges = [
     `'${worksheetTitle}'${worksheetRange ? `!${worksheetRange}` : ""}`
   ];
-
-  const sheets = google.sheets("v4");
+  const auth = await fetchAuthClient();
+  const sheets = google.sheets({ version: "v4", auth });
   const { data } = await sheets.spreadsheets.get({
     spreadsheetId,
     ranges,

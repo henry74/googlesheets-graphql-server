@@ -23,6 +23,8 @@ export type Json = any;
 
 export interface Query {
   unused?: Maybe<string>;
+  /** Generate auth URL for authentication */
+  authUrl: string;
   /** Fetch last modified date for a spreadsheet */
   lastModifiedDate: string;
   /** Fetch spreadsheet properties */
@@ -72,7 +74,7 @@ export interface NumberFormat {
 export interface Mutation {
   unused?: Maybe<string>;
 
-  addBooks?: Maybe<string>;
+  setOAuthCode?: Maybe<JsonObject>;
 }
 
 export interface Subscription {
@@ -98,6 +100,6 @@ export interface FetchTableQueryArgs {
   /** Table range in A1 notation */
   worksheetRange?: Maybe<string>;
 }
-export interface AddBooksMutationArgs {
-  title: string;
+export interface SetOAuthCodeMutationArgs {
+  code: string;
 }

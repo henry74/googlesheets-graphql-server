@@ -13,14 +13,17 @@
     "start": "yarn build && node dist/index.js",
     "start:dev": "npm-run-all --parallel build:watch inspect",
     "inspect": "nodemon --inspect=0.0.0.0:9229 dist/index.js",
-    "generate": "./tools/generate-gql.sh"
+    "generate": "./tools/generate-gql.sh",
+    "authorize": "ts-node ./tools/authorize.ts"
   },
   "dependencies": {
     "apollo-server-express": "^2.5.0",
     "chalk": "^2.4.2",
     "compression": "^1.7.4",
     "dotenv": "^8.0.0",
+    "dotenv-safe": "^6.1.0",
     "express": "^4.17.1",
+    "fs-extra": "^8.1.0",
     "googleapis": "^40.0.0",
     "graphql": "^14.3.1",
     "graphql-middleware": "^3.0.2",

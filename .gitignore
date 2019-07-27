@@ -65,3 +65,4 @@ dist/
 
 # client secret
 client_secret.json
+docker_run.sh

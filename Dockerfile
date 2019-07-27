@@ -11,5 +11,7 @@ EXPOSE 4000
 WORKDIR /app
 COPY --from=build ./src/node_modules node_modules
 COPY --from=build /src/dist dist
+COPY .env.example .
+RUN apk add --no-cache curl bash
 HEALTHCHECK CMD curl --fail http://localhost:4000/.well-known/apollo/server-health || exit 1
 CMD ["node", "dist/index.js"]

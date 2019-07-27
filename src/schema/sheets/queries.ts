@@ -2,6 +2,8 @@ import { gql } from "apollo-server-express";
 
 export const typeDef = gql`
   extend type Query {
+    "Generate auth URL for authentication"
+    authUrl: String!
     "Fetch last modified date for a spreadsheet"
     lastModifiedDate(spreadsheetId: String!): String!
     "Fetch spreadsheet properties"
@@ -21,6 +23,9 @@ export const typeDef = gql`
 
 export const resolvers = {
   Query: {
+    authUrl: (root, {}, { services: { sheets } }) => {
+      return sheets.authUrl();
+    },
     lastModifiedDate: (root, { spreadsheetId }, { services: { sheets } }) => {
       return sheets.lastModifiedDate(spreadsheetId);
     },

@@ -1,19 +1,16 @@
 import { gql } from "apollo-server-express";
-import logger from "../../util/logger";
 
 export const typeDef = gql`
   # Mutations
   extend type Mutation {
-    addBooks(title: String!): String
+    setOAuthCode(code: String!): JSONObject
   }
 `;
 
 export const resolvers = {
   Mutation: {
-    addBooks: async (root, { title }, context) => {
-      const response = `Add book with title: ${title}`;
-      logger.debug(response);
-      return response;
+    setOAuthCode: async (root, { code }, { services: { sheets } }) => {
+      return sheets.setOAuthCode(code);
     }
   }
 };

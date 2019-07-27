@@ -1,10 +1,12 @@
-import * as dotenv from "dotenv";
+import * as dotenv from "dotenv-safe";
 
 dotenv.config();
 
 const ENVIRONMENT_VARIABLES = {
-  CLIENT_EMAIL: "",
-  PRIVATE_KEY: ""
+  GOOGLE_OAUTH2_CLIENT_ID: "",
+  GOOGLE_OAUTH2_CLIENT_SECRET: "",
+  GOOGLE_OAUTH2_REDIRECT_URL: "",
+  TOKEN_PATH: ""
 };
 
 let fetched: boolean = false;
