@@ -1,3 +1,5 @@
+# Note: This is no longer being updated.  Please see https://github.com/henry74/gsuite-graphql-server for the latest updates
+
 # Simple GraphQL API for Google Sheets
 
 ## Setup
